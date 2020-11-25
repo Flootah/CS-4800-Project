@@ -26,7 +26,7 @@ public class KBTest {
 }
 
     //website check
-    webCheck(JSONObject a){
+    webCheck(JSONObject o){
        float ans= ;
        return ans;
     }
@@ -35,7 +35,7 @@ public class KBTest {
 
 
     //author check
-    authorCheck(JSONObject b){
+    authorCheck(JSONObject o){
 	float ans= ;
 	return ans;
     }
@@ -44,7 +44,7 @@ public class KBTest {
 
     
     //article check 
-    articleCheck(JSONObject c){
+    articleCheck(JSONObject o){
 	float ans= ;
 	return ans;
     }
@@ -53,7 +53,7 @@ public class KBTest {
     depending on what criteria we have for the ratio of citations.*/
 
     //date check
-    dateCheck(JSONObject d){
+    dateCheck(JSONObject o){
 	float ans= ;
 	return ans;
     }
