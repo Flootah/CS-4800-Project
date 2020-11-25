@@ -1,4 +1,5 @@
 package com.mycompany.kbfakenews;
+import java.util.*;
 // JSON imports
 import java.io.IOException;
 import org.json.simple.JSONObject;
@@ -9,7 +10,7 @@ import org.jsoup.select.*;
 
 /**
  *
- * @author Rashad, Ed S.
+ * @author Rashad, Ed S., Ammar
  * 
  * Knowledge-Based Fake News Detector
  **/
@@ -171,11 +172,32 @@ public class KBTest {
     if the article has been cited before it adds either 0 to 100 to the output 
     depending on what criteria we have for the ratio of citations.*/
 
-    //date check
+    /*@author Ammar
+	Check to see how old the article is. The older the article is the less credibilty it has.
+	*/
     private float dateCheck(String date){
-	
-	return 0;
-    }
+		//set variables and pull current year
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		float returnValue;
+		
+		//convert string to int and isolate the year
+        String d = date;
+        int year = Integer.parseInt(d.split("-")[0] );
+    
+		//if statement to check how recent the article is
+		if ((year <= currentYear) && (year > (currentYear-10))){
+			returnValue = 100;
+		} else if ((year <= (currentYear-10)) && (year > (currentYear-20))){
+			returnValue=75;
+		} else if (year > currentYear){
+			returnValue = 0;
+		} else{
+			returnValue = 50;
+		}
+		
+		//return a value between 0 and 100 for credibility
+		return returnValue;
+	}
     
     /*
      * @author Ed S.
