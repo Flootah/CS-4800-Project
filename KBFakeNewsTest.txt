@@ -11,31 +11,50 @@ package com.mycompany.kbfakenews;
  /
 public class KBTest {
     //knowledge based fake news detector
+    //calling avarage test results
+    //articleJ is the json file
     public static void main(String[] args){
-
-        //website percentage is depicted by website test method
-        int websitePercent = websitepercentageMethod();
-        //author percentage is depicted by author test method
-        int authorPercent = authorPercentageMethod();
-        //article percent is depicted by article test method
-        int articlePercent = articlepercentageMethod();
-
-        //percentage final output from 0-100 limit given by 
-        //finding the avarage of the three test values
-        int fkPercent =((websitePercentage+authorPercentage+articlePercentage)/3);
-
+	 float result = resultAVG(articleJ);
+   }
 }
+
+    //avg Check
+    resultAVG(.json){
+	//calculating avarage
+	float avg = (webCheck(articleJ) + authorCheck(articleJ) + articleCheck(articleJ) + dateCheck(articleJ))/4)
+	return avg;
 }
-    websitePercentageMethod{
+
+    //website check
+    webCheck(.json){
+       float ans= ;
+       return ans;
+    }
     //returns a value of 100 if the website is credible
     //returns 0 if website is not credible
-}
-    authorPercentageMethod{
-    /returns a value of 0-100 if the preson has has a i-10 index higheer 
+
+
+    //author check
+    authorCheck(.json){
+	float ans= ;
+	return ans;
+    }
+    //returns a value of 0-100 if the preson has has a i-10 index higheer 
     then a determined ammount that exceeds the avarage/
-}
-    articlePercentageMethod{
-    /returns a value corrisponding to articles credibility.
+
+    
+    //article check 
+    articleCheck(.json){
+	float ans= ;
+	return ans;
+    }
+    //returns a value corrisponding to articles credibility.
     if the article has been cited before it adds either 0 to 100 to the output 
     depending on what criteria we have for the ratio of citations.*/
-}
+
+    //date check
+    dateCheck(.json){
+	float ans= ;
+	return ans;
+    }
+
