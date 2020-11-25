@@ -9,7 +9,7 @@ import org.jsoup.select.*;
 
 /**
  *
- * @author Rashad, Eduardo S.
+ * @author Rashad, Ed S.
  * 
  * Knowledge-Based Fake News Detector
  **/
@@ -60,7 +60,18 @@ public class KBTest {
     //returns 0 if website is not credible
 
 
-    //author check
+     /*
+     * @author Ed S.
+     * 
+     * Author trust factor algorithm, based on a search of google scholar's i-10 index.
+     * 
+     * Takes in a string containing an author name, then uses Google Scholar's API to retrieve
+     * an i-10 index for that author. A value between 0 and 1 is returned as a representation of
+     * that author's trust factor; 0 being not trustworthy, and 1 being very trustworthy.
+     * 
+     * throws IOException mainly because the program gets mad if i don't, it has something to
+     * do with JSoup.
+     */
     private float authorCheck(String author) throws IOException{
 	// initialize variables
     	float trust;                    // author's calculated trust
@@ -165,7 +176,11 @@ public class KBTest {
 	
 	return 0;
     }
-
+    
+    /*
+     * @author Ed S.
+     * i use this function as a shorthand/force of habit, pls ignore me 
+     */
     private void log(String s) {
         System.out.println(s);
     }
