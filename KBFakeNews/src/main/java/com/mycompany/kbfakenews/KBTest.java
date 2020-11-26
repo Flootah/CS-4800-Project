@@ -30,16 +30,16 @@ public class KBTest {
         // eventually, we'll be putting code to scan articleJ and fill the respective
         // values here.
         articleJ = obj;
-        authorJ = "charles darwin";
+        // TODO JSON recieve code and filling J variables
+        authorJ = "June J. Pilcher";
         URLJ = "";
-        dateJ = "";
+        dateJ = "2010-11-25";
         contentJ = "";
     }
     
     //calling avarage test results
     //articleJ is the json file
     public static void main(String[] args) throws IOException{
-        System.out.println("running");
         JSONObject dummy = new JSONObject();
 	KBTest tester = new KBTest(dummy);
         System.out.println(tester.resultAVG());
@@ -57,8 +57,7 @@ public class KBTest {
        
        return 0;
     }
-    //returns a value of 100 if the website is credible
-    //returns 0 if website is not credible
+
 
 
      /*
@@ -95,6 +94,7 @@ public class KBTest {
     	boolean found = false;
     	// iterate through all <a> tags
     	for (Element link : results) {
+                if (found == true) break;
     		// store name
     		String name = link.text();
     		// store link
@@ -102,7 +102,7 @@ public class KBTest {
     		// debug: log(name);
     		// debug: log(address);
     		if(name.toLowerCase().contains(first) && name.toLowerCase().contains(last)) {
-    			log("match found, parsing " + name + "'s profile.");
+    			//log("match found, parsing " + name + "'s profile.");
     			doc = Jsoup.connect(address).get();
     			found = true;
     		}
@@ -138,24 +138,29 @@ public class KBTest {
     			break;
     		}
     	}
+        /* debug prints
     	System.out.println("citations: " + citations);		// citations
     	System.out.println("r_citations: " + r_citations);	// citations since 2015
     	System.out.println("hindex: " + hindex);		// h-index
     	System.out.println("r_hindex: " + r_hindex);		// h-index since 2015
     	System.out.println("i10index: " + i10index);		// i10-index
     	System.out.println("r_i10index: " + r_i10index);	// i10-index since 2015
-
+        */
     	// super top secret complex algorithm at work: 
     	float hvalue = (float) (Math.min((r_hindex/25.0), 1.0) * 0.3);			// hindex scales between 0-25, worth 3/10 of total
     	float cvalue = (float) (Math.min(r_citations/1500.0, 1.0) * 0.2);		// citation scales between 0-1500, worth 1/5 of total
     	float i10value = (float) (Math.min(r_i10index/50.0, 1.0) * 0.2);		// i10index scales between 0-50, worth  of total
-    	
-    	hvalue += (float) (Math.min(((r_hindex-25.0)/25.0), 1.0) * 0.1);		// hindex scales further between 25-50, worth 1/10 of total
+    	if(r_hindex > 25.0) {
+    	hvalue += (float) (Math.min(((r_hindex-25.0)/25.0), 1.0) * 0.1);                // hindex scales further between 25-50, worth 1/10 of total\
+        }
+        if(r_citations > 1500.0) {
     	cvalue += (float) (Math.min((r_citations-1500.0)/3500.0, 1.0) * 0.1);           // citation scales further between 1500-5000, worth 1/10 of total
+        }
+        if(r_i10index > 50.0) {
     	i10value += (float) (Math.min((r_i10index-50.0)/50.0, 1.0) * 0.1);		// i10index scales further between 50-100, worth 1/10 of total
-        
+        }
         trust = hvalue + cvalue + i10value;
-    	System.out.println("final author trust: " + trust);	// i10-index since 2015
+    	log("final author trust: " + trust);	// i10-index since 2015
     	
     	return trust;
     }
@@ -186,15 +191,16 @@ public class KBTest {
     
 		//if statement to check how recent the article is
 		if ((year <= currentYear) && (year > (currentYear-10))){
-			returnValue = 100;
+			returnValue = (float) 1;
 		} else if ((year <= (currentYear-10)) && (year > (currentYear-20))){
-			returnValue=75;
+			returnValue = (float) 0.75;
 		} else if (year > currentYear){
-			returnValue = 0;
+			returnValue = (float) 0;
 		} else{
-			returnValue = 50;
+			returnValue = (float) 0.5;
 		}
 		
+                log("final date trust: " + returnValue);
 		//return a value between 0 and 100 for credibility
 		return returnValue;
 	}
