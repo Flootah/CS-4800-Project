@@ -7,10 +7,14 @@ import org.json.simple.JSONObject;
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 /**
  *
- * @author Rashad, Ed S., Ammar
+ * @author Rashad, Ed S., Ammar, Brandon M.
  * 
  * Knowledge-Based Fake News Detector
  **/
@@ -170,8 +174,169 @@ public class KBTest {
     
     //article check 
     private float articleCheck(String content){
-	
-	return 0;
+		//kumars:   url     page_data<citation_urls>       page_data<body>
+    //Allysas:  url     citation_urls                  content
+    
+
+    //IMPORTANT!!!!!!!!!!!
+    //I need the citation urls in an ARRAYLIST<STRING>!!!!!!!!!! mine is named     public ArrayList<String> Citation_Urls;
+    //I NEED THE ARTICAL URL AND ARTICLE AS A STRING for..... reasons...... :)     mine are named      String Article           and             String JSON_Url = "";
+
+    //Gets URL, makes it lowercase;
+    
+    ArrayList<String> Nonbias_Citations = new ArrayList<String>();
+    ArrayList<String> Citation_Urls = new ArrayList<String>();
+
+    String JSON_Url = "";
+    String Main_Url = JSON_Url.toLowerCase();
+    
+    //gets ArrayList of citation URLs
+    
+    
+        
+    //Load body of article into stuff BELOW
+    String Article = "";
+
+    //Trust_Me_Citations for citation trust
+    //Trust_Me_senpai for body trust......  “(◉◞౪◟◉｀)”
+    //Trust for final trust value
+    float Trust_Me_Citations;        
+    float Trust_Me_Senpai;
+    float Trust;
+    boolean yes = true;
+    String Final_Form_Url = "";
+    
+    //to tell between Alyssas and Kumars URL
+    if (Main_Url.contains("www.") == true)
+    {
+        String Simple_URL = Main_Url.replaceFirst("http://www", "");
+        Final_Form_Url = Simple_URL.substring(0, Simple_URL.indexOf("."));
+        
+    }
+    else
+    {
+        String Simple_URL = Main_Url.replaceFirst("https://", "");
+        Final_Form_Url = Simple_URL.substring(0, Simple_URL.indexOf("."));
+    }
+    
+    //arrayList of domains to check for bias and unreliability
+    String[] Social_Media = new String[] {Final_Form_Url,"facebook","twitter","linkedin","reddit","instagram", "myspace"};
+    
+    
+    //If no citations, then nah. You get a 0 from oprah.
+    if(Citation_Urls.isEmpty())
+    {
+        Trust = 0;
+    }
+    else
+    {
+        //goes through arraylist of citation urls, 
+        for(int i = 0; i < Citation_Urls.size(); i++ )
+        {
+            String Final_Form_Citation = "";
+            //make it lowercase
+            String Citation = Citation_Urls.get(i).toLowerCase();
+            //again to check who gave the friggin citations
+            if(Citation.contains("www."))
+            {
+                Citation = Citation.replaceFirst("http://www.", "");
+                Final_Form_Citation = Citation.substring(0, Citation.indexOf("."));
+            }
+            else
+            {
+                Citation = Citation.replaceFirst("https://", "");
+                Final_Form_Citation = Citation.substring(0, Citation.indexOf("."));
+            }
+                //goes through array of known social media and biased cites to filter href citations
+                for(int j = 0; j < Social_Media.length; j++)
+                {
+                    if(Social_Media[j].equals(Final_Form_Citation)) 
+                    {                     
+                    }
+                    else
+                    {   
+                        Nonbias_Citations.add(Citation_Urls.get(i));
+                    }
+                }
+        }
+        //we now have arraylist of GOOD UNBIASED citation.
+        //assign that to a value
+        int Good_Shit = Nonbias_Citations.size();
+        
+            //give the value MEANING!!!!!
+            switch (Good_Shit) 
+			{
+                case 0:
+                    Trust_Me_Citations = (float) 0.0;
+                    break;
+                case 1:
+                case 2:
+                    Trust_Me_Citations = (float) 0.356465468435146843546516841365635434355334145546385443132164515335446535314653654442069;
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                    Trust_Me_Citations = (float) 0.692335442635343413234623635443541533524356835485394839053556254343545354436573131342069;
+                    break;
+                default:
+                    Trust_Me_Citations = (float) 0.905668546354445834783748578678768787908070897084252221221352686464163168151058456842069;
+                    break;
+            }
+            
+            
+            
+
+     //now check article length
+     //convert string to bytes
+     //use an algorithm i made before to count words
+        byte[] Article_Byte = Article.getBytes(StandardCharsets.US_ASCII);
+        int Words_In_Article = 0;
+        for(int i = 0; i < Article.length(); i++)
+        {
+            if (Article_Byte[i] == 32 || Article_Byte[i] == 46)
+            {
+                if((i != 0 &&  Article_Byte[i-1] == 46)) 
+                {
+                    //do nothing 
+                }
+                else if(i != (Article.length()-1) && ( Article_Byte[i+1] == 46))
+                {
+                    //do ABSOLUTELY NOTHING :)
+                }
+                 else
+                {
+                Words_In_Article += 1;
+                }
+            }
+        }
+        
+        //Now we give it more math in accordance to word length
+        if(Words_In_Article == 0)
+        {
+            Trust_Me_Senpai = (float) 0.0;
+        }
+        else if(Words_In_Article > 0 && Words_In_Article < 100 )
+        {
+            Trust_Me_Senpai = (float) 0.356465468435146843546516841365635434355334145546385443132164515335446535314653654442069;
+        }
+        else if(Words_In_Article > 100 && Words_In_Article <200  )
+        {
+            Trust_Me_Senpai = (float) 0.644584454854842184121561356463541321685232122312121112354354684968469843541632106342069;
+        }
+        else if(Words_In_Article > 200 && Words_In_Article < 500 )
+        {
+            Trust_Me_Senpai = (float) 0.831646431316494915451744527443556674454543413654651354334435413634551334543568367842069;
+        }
+        else
+        {
+            Trust_Me_Senpai = (float) 0.9422215133665545841136396646865343451846262461276216416421967216742121672167451765242069;
+        }
+        //gotta bring it all together!!!!!!!
+        Trust = (float) ((0.75 * Trust_Me_Citations) + (0.25 * Trust_Me_Senpai));
+        
+    }  
+    return Trust;
+}
     }
     /*returns a value corrisponding to articles credibility.
     if the article has been cited before it adds either 0 to 100 to the output 
