@@ -361,12 +361,16 @@ public class KBTest {
 			returnValue = (float) 0.75;
 		} else if (year > currentYear){
 			returnValue = (float) 0;
+		} else if (d.contains("-04-01-")){
+			returnValue = (float) 0;
+		} else if (d = null){
+			returnValue = (float) 0.5;
 		} else{
 			returnValue = (float) 0.5;
 		}
 		
                 log("final date trust: " + returnValue);
-		//return a value between 0 and 100 for credibility
+		//return a value between 0 and 1 for credibility
 		return returnValue;
 	}
     
