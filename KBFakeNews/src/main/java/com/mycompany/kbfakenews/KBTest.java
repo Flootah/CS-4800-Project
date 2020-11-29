@@ -396,9 +396,9 @@ public class KBTest {
 public static void getInfo() {
     BufferedReader reader;
     String line;
-    StringBuffer responseContent = new String Buffer();
+    StringBuffer responseContent = new StringBuffer();
     try {
-        URL url = new URL("http://jsonplaceholder.typicode.com")
+        URL url = new URL("http://jsonplaceholder.typicode.com");
         connection = (HttpURLConnection) url.openConnection();
          
         //request setup
@@ -406,25 +406,25 @@ public static void getInfo() {
         connection.setConnectTimeout(5000);
         connection.setReadTimeout(5000);
     
-        int status = connectio.getResponceCode();
+        int status = connection.getResponseCode();
             
         if (status > 299) {
-            reader = new BufferedREader (new InputStreamReader(connection.getInputStream()));
+            reader = new BufferedReader (new InputStreamReader(connection.getInputStream()));
             while ((line = reader.readLine()) != null) {
-                responceContent.append(line);
+                responseContent.append(line);
              }
             reader.close();
         }
         else {
             reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-            while((line = reader.readLIne()) != null {
-                responceContent.append(line);
+            while((line = reader.readLine()) != null) {
+                responseContent.append(line);
             }
             reader.close();
         }
-        System.out.println(responceContent.toString());
+        System.out.println(responseContent.toString());
     } 
-    catch (malformedURLException e) {
+    catch (MalformedURLException e) {
         e.printStackTrace();
     } 
     catch (IOException e) {
