@@ -346,7 +346,7 @@ public class KBTest {
     }  
     return Trust;
 }
-    }
+    
     /*returns a value corrisponding to articles credibility.
     if the article has been cited before it adds either 0 to 100 to the output 
     depending on what criteria we have for the ratio of citations.*/
@@ -393,10 +393,6 @@ public class KBTest {
         
 
 
-
-
-
-
 public static void getInfo() {
     BufferedReader reader;
     String line;
@@ -437,4 +433,6 @@ public static void getInfo() {
     finally {
         connection.disconnect();
     }
+}
+
 }
