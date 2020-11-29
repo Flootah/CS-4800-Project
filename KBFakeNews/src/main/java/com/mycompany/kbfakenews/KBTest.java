@@ -11,6 +11,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLConnection;
+import java.net.URL;
+        
 
 /**
  *
@@ -40,6 +46,9 @@ public class KBTest {
         dateJ = "2010-11-25";
         contentJ = "";
     }
+    
+    //making connection to net
+    public static HttpURLConnection connection;
     
     //calling avarage test results
     //articleJ is the json file
@@ -381,5 +390,51 @@ public class KBTest {
     private void log(String s) {
         System.out.println(s);
     }
+        
 
+
+
+
+
+
+public static void getInfo() {
+    BufferedReader reader;
+    String line;
+    StringBuffer responseContent = new String Buffer();
+    try {
+        URL url = new URL("http://jsonplaceholder.typicode.com")
+        connection = (HttpURLConnection) url.openConnection();
+         
+        //request setup
+        connection.setRequestMethod("GET");
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
+    
+        int status = connectio.getResponceCode();
+            
+        if (status > 299) {
+            reader = new BufferedREader (new InputStreamReader(connection.getInputStream()));
+            while ((line = reader.readLine()) != null) {
+                responceContent.append(line);
+             }
+            reader.close();
+        }
+        else {
+            reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+            while((line = reader.readLIne()) != null {
+                responceContent.append(line);
+            }
+            reader.close();
+        }
+        System.out.println(responceContent.toString());
+    } 
+    catch (malformedURLException e) {
+        e.printStackTrace();
+    } 
+    catch (IOException e) {
+        e.printStackTrace();
+    }
+    finally {
+        connection.disconnect();
+    }
 }
