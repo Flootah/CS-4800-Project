@@ -392,12 +392,13 @@ public class KBTest {
     }
         
 
-
-public static void getInfo() {
+//need to find a way to store the data instead of printing our info
+public void getInfo() {
     BufferedReader reader;
     String line;
     StringBuffer responseContent = new StringBuffer();
     try {
+        //replace http with server link accordingly
         URL url = new URL("http://jsonplaceholder.typicode.com");
         connection = (HttpURLConnection) url.openConnection();
          
@@ -422,6 +423,11 @@ public static void getInfo() {
             }
             reader.close();
         }
+        //maybe converting into json
+        articleJ = responseContent; 
+        
+        
+        //prints out the json file
         System.out.println(responseContent.toString());
     } 
     catch (MalformedURLException e) {
@@ -433,6 +439,12 @@ public static void getInfo() {
     finally {
         connection.disconnect();
     }
+    authorJ = articleJ.get("author");  
+    URLJ = articleJ.get("URL");   
+    dateJ = articleJ.get("date"); 
+    contentJ = articleJ.get("content");  
+    
+    
 }
 
 }
