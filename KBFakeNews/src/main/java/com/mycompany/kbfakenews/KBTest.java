@@ -66,10 +66,94 @@ public class KBTest {
 }
 
     //website check
-    private float webCheck(String url){
-       
-       return 0;
-    }
+    private float webCheck(String url)
+	{
+		ArrayList<String> Trusted_Domains = new ArrayList<String>();
+		String Main_Url = URLJ.toLowerCase();		//get URL and make it undercase
+		float Article_Trust_Senpai = articleCheck();
+		float Trust_Me_URL_chan = .69420696942069694206969420696942069; 				//Trust_Me_URL-chan for URL trust......  “(◉◞౪◟◉｀)”
+		float Trust_Cuz_Of_Article_Check;
+		float Trust;								//Trust for final trust value
+		boolean yes = true;
+		String Final_Form_Url = "";
+		String Simple_URL = "";
+		
+		//to tell between Alyssas and Kumars URL
+		if (Main_Url.contains("www.") == yes)
+		{
+			Simple_URL = Main_Url.replaceFirst("http://www", "");
+			Final_Form_Url = Simple_URL.substring(0, Simple_URL.indexOf("."));			
+		}
+		else
+		{
+			Simple_URL = Main_Url.replaceFirst("https://", "");
+			Final_Form_Url = Simple_URL.substring(0, Simple_URL.indexOf("."));
+		}
+    
+		//array of domains to check for unreliability
+		String[] Its_Just_A_Prank_Bro = new String[] {"dailybuzzlive", "theonion", "clickhole", "thepoke", "thedailymash", "waterfordwhispersnews", "zdoggmd", 
+			"newsthump", "betootaadvocate", "thebeaverton", "dailysquib", "capslocknews", "theshovel", "chaser", "duffelblog", "shitpostr", "huzlers", "gomerblog"
+			, "thepeoplescube", "breakingburgh", "canadify", "glossynews", "burrardstreetjournal", "thehindu", "newsbiscuit", "therisingwasabi", "halfwaypost", "thespoof"
+			, "robotbutt", "themideastbeast", "humortimes", "takomatorch", "wokennews", "thesleaze", "hindisatire", "krotchett", "neutralgroundnews", "delawareohionews"
+			, "dnatured", "thesatirist", "sauceots", "thesatira", "thetiltedglass", "johnnyrobishcomedy", "adobochronicles", "dupaloo", "beetpress", "irelandoncraic"
+			, "thesportrag", "thewashingtontoast", "baconplant", "gooferie", "bentspud", "fmobserver", "theluckyrock", "makeamericathebest", "thingsihear", "pugbus"
+			, "dailydiscord", "sukispangles", "initialreactionnews", "wellmanneredgrump", "newsfoxsatire", "asiteforsoreguys", "tornwires", "thepuddlegulchpost"
+			, "somekindofdiaper", "metrohippo", "dailydistress", "dapaan", "lifechampion", "nickwinchester", "dailypresenter", "uxstercom", "oxenmouth-news", "captcrankypants"
+			, "fictionalstories", "thegoodgopher", "trollwire", "renegade-news", "laughsend", "thevanitymetric", "flaggedcontent", "redtopmilk", "chattychimp", "thewokest"
+			, "empirenews", "sportspickle"};	//unreliable
+				
+		
+		//if the URL is in the trusted list, then skip everything, its probably good
+		if(Trusted_Domains.contains(Final_Form_Url)
+		{
+				Trust = (float) 0.999999999999999999999999999999;
+		}
+		
+        else
+		{
+			//goes through array of unreliable website list 
+			for(int i = 0; i < Its_Just_A_Prank_Bro.size(); i++ )	
+				{
+				if(Its_Just_A_Prank_Bro[i].equals(Final_Form_Url)) 
+				{      
+					Trust_Me_URL_chan = (float) 0.000000000000000000000000000000;
+					break;
+				}            			
+			}
+			
+			//blogs are unreliable sometimes
+			if(Main_Url.contains("blog"))
+			{
+				Trust_Me_URL_chan /= (float) 2;
+			}
+			
+			//Even if reliablility cannot be guaranteed through the URL directly, the domain can gain trust based on article
+			if (Article_Trust_Senpai > .80)
+			{
+				Trust_Cuz_Of_Article_Check = (float) 0.920365548559681123565480869500042069;
+				
+				//if we can add to a running list of reliable domains based on our other checks,
+				//then we should do it here
+				Trusted_Domains.add(Final_Form_Url);							
+			}					
+			else if(Article_Trust_Senpai > .50)
+			{
+				Trust_Cuz_Of_Article_Check = (float) 0.695565411002548412684523564346542069;
+			}
+			else if(Article_Trust_Senpai > .25)
+			{
+				Trust_Cuz_Of_Article_Check = (float) 0.166354869420659888532451252366942069;		
+			}
+			else
+			{
+				Trust_Cuz_Of_Article_Check = (float) 0.000000000000000000000000000000042069;		
+			}
+	
+			Trust = (float) ((0.68474 * Trust_Me_URL_chan) + (0.31526 * Article_Trust_Senpai));
+		}
+		return Trust;
+
+	}
 
 
 
@@ -189,22 +273,20 @@ public class KBTest {
 
     //IMPORTANT!!!!!!!!!!!
     //I need the citation urls in an ARRAYLIST<STRING>!!!!!!!!!! mine is named     public ArrayList<String> Citation_Urls;
-    //I NEED THE ARTICAL URL AND ARTICLE AS A STRING for..... reasons...... :)     mine are named      String Article           and             String JSON_Url = "";
 
-    //Gets URL, makes it lowercase;
-    
+
+    //Gets URL, makes it lowercase;  
     ArrayList<String> Nonbias_Citations = new ArrayList<String>();
     ArrayList<String> Citation_Urls = new ArrayList<String>();
 
-    String JSON_Url = "";
-    String Main_Url = JSON_Url.toLowerCase();
+    String Main_Url = URLJ.toLowerCase();
     
     //gets ArrayList of citation URLs
     
     
         
     //Load body of article into stuff BELOW
-    String Article = "";
+    String Article = contentJ;
 
     //Trust_Me_Citations for citation trust
     //Trust_Me_senpai for body trust......  “(◉◞౪◟◉｀)”
