@@ -7,10 +7,10 @@ import org.json.simple.JSONObject;
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
+// untagged imports
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -31,6 +31,7 @@ public class KBTest {
     private String URLJ;            // article URL
     private String dateJ;           // article Date
     private String contentJ;        // article content
+    private String[] citationsJ;      // article citations
     /*
     * Constructor for this class.
     * currently does nothing.
@@ -45,6 +46,7 @@ public class KBTest {
         URLJ = "";
         dateJ = "2010-11-25";
         contentJ = "";
+        citationsJ = new String[] {""};
     }
     
     //making connection to net
@@ -61,7 +63,8 @@ public class KBTest {
     //avg Check
     public float resultAVG() throws IOException{
 	//calculating avarage
-	float avg = ((webCheck(URLJ) + authorCheck(authorJ) + articleCheck(contentJ) + dateCheck(dateJ))/4);
+        
+	float avg = ((webCheck(URLJ) + authorCheck(authorJ) + articleCheck(URLJ, contentJ, citationsJ) + dateCheck(dateJ))/4);
 	return avg;
 }
 
@@ -69,11 +72,11 @@ public class KBTest {
     private float webCheck(String url)
 	{
 		ArrayList<String> Trusted_Domains = new ArrayList<String>();
-		String Main_Url = URLJ.toLowerCase();		//get URL and make it undercase
-		float Article_Trust_Senpai = articleCheck();
-		float Trust_Me_URL_chan = .69420696942069694206969420696942069; 				//Trust_Me_URL-chan for URL trust......  “(◉◞౪◟◉｀)”
+		String Main_Url = url.toLowerCase();                                            //get URL and make it undercase
+		float Article_Trust_Senpai = articleCheck(URLJ, contentJ, citationsJ);
+		float Trust_Me_URL_chan = (float) 0.69420696942069694206969420696942069; 	//Trust_Me_URL-chan for URL trust......  “(◉◞౪◟◉｀)”
 		float Trust_Cuz_Of_Article_Check;
-		float Trust;								//Trust for final trust value
+                    float Trust;								//Trust for final trust value
 		boolean yes = true;
 		String Final_Form_Url = "";
 		String Simple_URL = "";
@@ -104,15 +107,15 @@ public class KBTest {
 				
 		
 		//if the URL is in the trusted list, then skip everything, its probably good
-		if(Trusted_Domains.contains(Final_Form_Url)
+		if(Trusted_Domains.contains(Final_Form_Url))
 		{
 				Trust = (float) 0.999999999999999999999999999999;
 		}
 		
-        else
+                else
 		{
 			//goes through array of unreliable website list 
-			for(int i = 0; i < Its_Just_A_Prank_Bro.size(); i++ )	
+			for(int i = 0; i < Its_Just_A_Prank_Bro.length; i++ )	
 				{
 				if(Its_Just_A_Prank_Bro[i].equals(Final_Form_Url)) 
 				{      
@@ -266,8 +269,8 @@ public class KBTest {
 
     
     //article check 
-    private float articleCheck(String content){
-		//kumars:   url     page_data<citation_urls>       page_data<body>
+    private float articleCheck(String url, String content, String[] citations){
+    //kumars:   url     page_data<citation_urls>       page_data<body>
     //Allysas:  url     citation_urls                  content
     
 
@@ -276,17 +279,15 @@ public class KBTest {
 
 
     //Gets URL, makes it lowercase;  
-    ArrayList<String> Nonbias_Citations = new ArrayList<String>();
-    ArrayList<String> Citation_Urls = new ArrayList<String>();
+    ArrayList<String> Nonbias_Citations = new ArrayList<>(Arrays.asList(citations));
+    ArrayList<String> Citation_Urls = new ArrayList<>(Arrays.asList(citations));
 
-    String Main_Url = URLJ.toLowerCase();
+    String Main_Url = url.toLowerCase();
     
     //gets ArrayList of citation URLs
     
-    
-        
     //Load body of article into stuff BELOW
-    String Article = contentJ;
+    String Article = content;
 
     //Trust_Me_Citations for citation trust
     //Trust_Me_senpai for body trust......  “(◉◞౪◟◉｀)”
@@ -408,6 +409,7 @@ public class KBTest {
         }
         else if(Words_In_Article > 0 && Words_In_Article < 100 )
         {
+            
             Trust_Me_Senpai = (float) 0.356465468435146843546516841365635434355334145546385443132164515335446535314653654442069;
         }
         else if(Words_In_Article > 100 && Words_In_Article <200  )
@@ -422,9 +424,9 @@ public class KBTest {
         {
             Trust_Me_Senpai = (float) 0.9422215133665545841136396646865343451846262461276216416421967216742121672167451765242069;
         }
+        
         //gotta bring it all together!!!!!!!
         Trust = (float) ((0.75 * Trust_Me_Citations) + (0.25 * Trust_Me_Senpai));
-        
     }  
     return Trust;
 }
@@ -454,7 +456,7 @@ public class KBTest {
 			returnValue = (float) 0;
 		} else if (d.contains("-04-01-")){
 			returnValue = (float) 0;
-		} else if (d = null){
+		} else if (d == null){
 			returnValue = (float) 0.5;
 		} else{
 			returnValue = (float) 0.5;
