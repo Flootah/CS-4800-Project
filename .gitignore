@@ -4,3 +4,5 @@
 .project
 src/KBFakeNewsTest.java
 /KBWebApp/nbproject/private/
+/KBWebApp/build/
+/KBWebApp/dist/
