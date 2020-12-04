@@ -454,7 +454,7 @@ public class KBTest {
 			returnValue = (float) 0.75;
 		} else if (year > currentYear){
 			returnValue = (float) 0;
-		} else if (d.contains("-04-01-")){
+		} else if (d.contains("-04-01")){
 			returnValue = (float) 0;
 		} else if (d == null){
 			returnValue = (float) 0.5;
