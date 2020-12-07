@@ -448,13 +448,13 @@ public class KBTest {
         int year = Integer.parseInt(d.split("-")[0] );
     
 		//if statement to check how recent the article is
-		if ((year <= currentYear) && (year > (currentYear-10))){
+		if (d.contains("-04-01")){
+			returnValue = (float) 0;
+		} else if ((year <= currentYear) && (year > (currentYear-10))){
 			returnValue = (float) 1;
 		} else if ((year <= (currentYear-10)) && (year > (currentYear-20))){
 			returnValue = (float) 0.75;
 		} else if (year > currentYear){
-			returnValue = (float) 0;
-		} else if (d.contains("-04-01")){
 			returnValue = (float) 0;
 		} else if (d == null){
 			returnValue = (float) 0.5;
@@ -467,6 +467,7 @@ public class KBTest {
 		return returnValue;
 	}
     
+	
     /*
      * @author Ed S.
      * i use this function as a shorthand/force of habit, pls ignore me 
