@@ -1,54 +1,96 @@
 package com.mycompany.kbfakenews;
+
 import java.util.*;
 // JSON imports
 import java.io.IOException;
-import org.json.simple.JSONObject;
+import org.json.*;
+
 // JSoup imports
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
+
 // untagged imports
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLConnection;
-import java.net.URL;
-        
+      
 
 /**
  *
- * @author Rashad, Ed S., Ammar, Brandon M.
  * 
+ * @author Rashad, Ed S., Ammar, Brandon M.
+ *  
  * Knowledge-Based Fake News Detector
  **/
 public class KBTest {
     // fields
     private JSONObject articleJ;    // article to test
-    private String authorJ;         // article author
+    private String[] authorsJ;         // article authors
     private String URLJ;            // article URL
     private String dateJ;           // article Date
     private String contentJ;        // article content
     private String[] citationsJ;      // article citations
     /*
+    public void citationsJset(String j){
+        citationsJ[] = j;
+    }
+    
     * Constructor for this class.
     * currently does nothing.
     */
-    public KBTest(JSONObject obj) {
+    
+
+    public KBTest(JSONObject obj) throws IOException {
         // initialize variables
         // eventually, we'll be putting code to scan articleJ and fill the respective
         // values here.
         articleJ = obj;
         // TODO JSON recieve code and filling J variables
-        authorJ = "June J. Pilcher";
-        URLJ = "";
-        dateJ = "2010-11-25";
-        contentJ = "";
-        citationsJ = new String[] {""};
+        // set authors if exists
+        if(!obj.getJSONObject("page_data").isNull("authors")) {
+            authorsJ = toStringArray(obj.getJSONObject("page_data").getJSONArray("authors"));
+        } else {
+            authorsJ = new String[] {};
+        }
+        // set url if exists
+        if(!obj.isNull("url")) {
+            URLJ = obj.getString("url");
+        } else {
+            URLJ = "";
+        }
+        // set date if exists
+        if(!obj.getJSONObject("page_data").isNull("publish_date_time")) {
+            dateJ = obj.getJSONObject("page_data").getString("publish_date_time");
+        } else {
+            dateJ = "";
+        }
+        // set contetnt if exists
+        if(!obj.getJSONObject("page_data").isNull("body")) {
+            contentJ = obj.getJSONObject("page_data").getString("body");
+        } else {
+            contentJ = "";
+        }
+        // set citations
+        if(!obj.getJSONObject("page_data").isNull("citation_urls")) {
+            citationsJ = toStringArray(obj.getJSONObject("page_data").getJSONArray("citation_urls"));
+        } else {
+            citationsJ = new String[] {};
+        }
+
+        
+        /*
+        Temp Prints
+        */
+        System.out.println("authors: " + Arrays.toString(authorsJ));
+        System.out.println("url: " + URLJ);
+        System.out.println("date: " + dateJ);
+        System.out.println("content: " + contentJ);
+        System.out.println("citations: " + Arrays.toString(citationsJ));
+        System.out.println("");
+        System.out.println(resultAVG());
     }
-    
+
     //making connection to net
     public static HttpURLConnection connection;
     
@@ -64,7 +106,7 @@ public class KBTest {
     public float resultAVG() throws IOException{
 	//calculating avarage
         
-	float avg = ((webCheck(URLJ) + authorCheck(authorJ) + articleCheck(URLJ, contentJ, citationsJ) + dateCheck(dateJ))/4);
+	float avg = ((webCheck(URLJ) + authorCheck(authorsJ) + articleCheck(URLJ, contentJ, citationsJ) + dateCheck(dateJ))/4);
 	return avg;
 }
 
@@ -158,8 +200,21 @@ public class KBTest {
 
 	}
 
-
-
+    /*
+     * Cobbled together function to make sure we can handle multiple authors
+     * simply will return the highest trust given back from each author.
+    */
+    private float authorCheck(String[] authors) 
+        throws IOException {
+        float total = 0;
+        for (String author : authors) {
+            float curTrust = authorCheck(author);
+            if (curTrust > total) {
+                total = curTrust;
+            }
+        }
+        return total;
+    }
      /*
      * @author Ed S.
      * 
@@ -448,13 +503,13 @@ public class KBTest {
         int year = Integer.parseInt(d.split("-")[0] );
     
 		//if statement to check how recent the article is
-		if (d.contains("-04-01")){
-			returnValue = (float) 0;
-		} else if ((year <= currentYear) && (year > (currentYear-10))){
+		if ((year <= currentYear) && (year > (currentYear-10))){
 			returnValue = (float) 1;
 		} else if ((year <= (currentYear-10)) && (year > (currentYear-20))){
 			returnValue = (float) 0.75;
 		} else if (year > currentYear){
+			returnValue = (float) 0;
+		} else if (d.contains("-04-01-")){
 			returnValue = (float) 0;
 		} else if (d == null){
 			returnValue = (float) 0.5;
@@ -467,7 +522,6 @@ public class KBTest {
 		return returnValue;
 	}
     
-	
     /*
      * @author Ed S.
      * i use this function as a shorthand/force of habit, pls ignore me 
@@ -475,8 +529,19 @@ public class KBTest {
     private void log(String s) {
         System.out.println(s);
     }
-        
+    
+    private static String[] toStringArray(JSONArray array) {
+    if(array==null)
+        return null;
 
+    String[] arr=new String[array.length()];
+    for(int i=0; i<arr.length; i++) {
+        arr[i]=array.optString(i);
+    }
+    return arr;
+}
+        
+/*
 //need to find a way to store the data instead of printing our info
 public void getInfo() {
     BufferedReader reader;
@@ -531,5 +596,6 @@ public void getInfo() {
     
     
 }
+ */
 
 }
