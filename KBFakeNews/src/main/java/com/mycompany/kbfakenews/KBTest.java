@@ -88,7 +88,7 @@ public class KBTest {
         System.out.println("content: " + contentJ);
         System.out.println("citations: " + Arrays.toString(citationsJ));
         System.out.println("");
-        System.out.println(resultAVG());
+        System.out.println("Final trust value: " + resultAVG());
     }
 
     //making connection to net
@@ -105,8 +105,11 @@ public class KBTest {
     //avg Check
     public float resultAVG() throws IOException{
 	//calculating avarage
-        
-	float avg = ((webCheck(URLJ) + authorCheck(authorsJ) + articleCheck(URLJ, contentJ, citationsJ) + dateCheck(dateJ))/4);
+        float avg = 0;
+        avg += articleCheck(URLJ, contentJ, citationsJ) * 0.15;
+        avg += webCheck(URLJ) * 0.35;
+        avg += authorCheck(authorsJ) * 0.35;
+        avg += dateCheck(dateJ) * 0.15;
 	return avg;
 }
 
@@ -151,20 +154,17 @@ public class KBTest {
 		//if the URL is in the trusted list, then skip everything, its probably good
 		if(Trusted_Domains.contains(Final_Form_Url))
 		{
-				Trust = (float) 0.999999999999999999999999999999;
+				return (float) 0.999999999999999999999999999999;
 		}
 		
                 else
 		{
-			//goes through array of unreliable website list 
-			for(int i = 0; i < Its_Just_A_Prank_Bro.length; i++ )	
-				{
-				if(Its_Just_A_Prank_Bro[i].equals(Final_Form_Url)) 
-				{      
-					Trust_Me_URL_chan = (float) 0.000000000000000000000000000000;
-					break;
-				}            			
-			}
+                    //goes through array of unreliable website list
+                    for (String Its_Just_A_Prank_Bro1 : Its_Just_A_Prank_Bro) {
+                        if (Final_Form_Url.contains(Its_Just_A_Prank_Bro1)) {
+                            return (float) 0.000000000000000000000000000000;
+                        }
+                    }
 			
 			//blogs are unreliable sometimes
 			if(Main_Url.contains("blog"))
@@ -196,12 +196,14 @@ public class KBTest {
 	
 			Trust = (float) ((0.68474 * Trust_Me_URL_chan) + (0.31526 * Article_Trust_Senpai));
 		}
+                System.out.println("Web trust: " + Trust);
 		return Trust;
 
 	}
 
     /*
-     * Cobbled together function to make sure we can handle multiple authors
+     * @author Eduardo S.
+     * function to make sure we can handle multiple authors
      * simply will return the highest trust given back from each author.
     */
     private float authorCheck(String[] authors) 
@@ -213,10 +215,11 @@ public class KBTest {
                 total = curTrust;
             }
         }
+        log("author trust: " + total);
         return total;
     }
      /*
-     * @author Ed S.
+     * @author Eduardo S.
      * 
      * Author trust factor algorithm, based on a search of google scholar's i-10 index.
      * 
@@ -262,9 +265,11 @@ public class KBTest {
     			found = true;
     		}
     	}
-    	// if no author found, return value of 0.5 for now.
+    	// if no author found, return a low trust factor value of 0.2 for now.
     	// also i have to cast it to float for some dumb reason
-    	if(!found) return trust = (float) 0.5;
+    	if(!found) {
+            return noAuthor(author);
+        }
     	// select table on page that contains the relevant information
     	Elements dataTable = doc.select("table[id=gsc_rsb_st] > tbody > tr");
     	// iterate thorugh rows on the table
@@ -315,7 +320,7 @@ public class KBTest {
     	i10value += (float) (Math.min((r_i10index-50.0)/50.0, 1.0) * 0.1);		// i10index scales further between 50-100, worth 1/10 of total
         }
         trust = hvalue + cvalue + i10value;
-    	log("final author trust: " + trust);	// i10-index since 2015
+    	
     	
     	return trust;
     }
@@ -483,6 +488,7 @@ public class KBTest {
         //gotta bring it all together!!!!!!!
         Trust = (float) ((0.75 * Trust_Me_Citations) + (0.25 * Trust_Me_Senpai));
     }  
+    System.out.println("articlecheck: " + Trust);
     return Trust;
 }
     
@@ -503,21 +509,23 @@ public class KBTest {
         int year = Integer.parseInt(d.split("-")[0] );
     
 		//if statement to check how recent the article is
-		if ((year <= currentYear) && (year > (currentYear-10))){
+		if ((year <= currentYear) && (year > (currentYear-2))){
 			returnValue = (float) 1;
-		} else if ((year <= (currentYear-10)) && (year > (currentYear-20))){
+		} else if ((year <= (currentYear-2)) && (year > (currentYear-5))){
 			returnValue = (float) 0.75;
+                } else if ((year <= (currentYear-5)) && (year > (currentYear-10))) {
+                        returnValue = (float) 0.4;
 		} else if (year > currentYear){
 			returnValue = (float) 0;
-		} else if (d.contains("-04-01-")){
+		} else if (d.contains("-04-01")){
 			returnValue = (float) 0;
-		} else if (d == null){
-			returnValue = (float) 0.5;
+		} else if (d == null || d == ""){
+			returnValue = (float) 0.2;
 		} else{
-			returnValue = (float) 0.5;
+			returnValue = (float) 0.2;
 		}
 		
-                log("final date trust: " + returnValue);
+                log("date trust: " + returnValue);
 		//return a value between 0 and 1 for credibility
 		return returnValue;
 	}
@@ -540,6 +548,11 @@ public class KBTest {
     }
     return arr;
 }
+    
+    private float noAuthor(String author) {
+        Random r = new Random();
+        return (float) 0.2 + ((float) (r.nextFloat()*0.1));
+    }
         
 /*
 //need to find a way to store the data instead of printing our info

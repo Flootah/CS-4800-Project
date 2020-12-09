@@ -1,14 +1,7 @@
 package com.mycompany.kbfakenews;
-
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.*;
@@ -31,7 +24,9 @@ public class KBServlet {
     
     public static void main(String[] args) throws IOException{
         KBServlet server = new KBServlet();
-        server.doPost();
+        server.doPost("testjson1.json");
+        server.doPost("testjson2.json");
+        server.doPost("testjson3.json");
     }
    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -69,20 +64,18 @@ public class KBServlet {
         
         }
     
-    protected void doPost() throws IOException {
+    protected void doPost(String filename) throws IOException {
         StringBuilder sb = new StringBuilder();         // string maker to make JSON String
-        System.out.println("reading file...");
-        BufferedReader reader = new BufferedReader(new FileReader("testjson.json"));       // reader from test JSON File
-        try {                                           // try to build JSON
+        System.out.println("-------------------------------------------------------------------------------");
+        System.out.println("parsing json: ");
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename)) // reader from test JSON File
+        ) {                                           // try to build JSON
             String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append('\n');
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             
-        }
-        finally {
-            reader.close();
         }
         String jsonString = sb.toString();
         System.out.println(jsonString);                 // print interpreted string

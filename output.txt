@@ -1,0 +1,121 @@
+-------------------------------------------------------------------------------
+parsing json: 
+{
+  "url": "https://theonion.com/your-honor-i-m-ready-to-present-says-giuliani-pulli-1845716203",
+  "post_data": "11/19/20",
+  "page_data": {
+    "title": "â€˜Your Honor, Iâ€™m Ready To Present,â€™ Says Giuliani Pulling Rotted Melon, Stray Cat Out Of Old Burlap Sack",
+    "subtitle": null,
+    "authors": ["Rudy Giuliani"],
+    "publisher": "The Onion",
+    "publish_date": "11/19/20",
+    "publish_date_time": "2018-10-05T04:20:69Z",
+    "body": "[[removed for brevity]]",
+	"citation_urls": [
+            "https://politics.theonion.com/rss",
+            "https://politics.theonion.com/your-honor-i-m-ready-to-present-says-giuliani-pulli-1845716203",
+			"https://theonion.com/",
+			"https://thetakeout.com/"
+    ],
+    "html": null
+  }
+}
+
+authors: [Rudy Giuliani]
+url: https://theonion.com/your-honor-i-m-ready-to-present-says-giuliani-pulli-1845716203
+date: 2018-10-05T04:20:69Z
+content: [[removed for brevity]]
+citations: [https://politics.theonion.com/rss, https://politics.theonion.com/your-honor-i-m-ready-to-present-says-giuliani-pulli-1845716203, https://theonion.com/, https://thetakeout.com/]
+
+articlecheck: 0.88716304
+Web trust: 0.27968702
+author trust: 0.22895344
+articlecheck: 0.88716304
+final date trust: 0.75
+0.53645086
+-------------------------------------------------------------------------------
+parsing json: 
+{
+  "url": "https://www.usatoday.com/story/money/2020/10/05/trump-defeats-covid-commemorative-coins-on-sale-gift-shop/3628383001/",
+  "post_data": null,
+  "page_data": {
+    "title": "Becoming a Part of the Story",
+    "subtitle": "How our day at the food pantry hit close to home. Plus, your questions about vaccine distribution, answered.",
+    "authors": [
+      "Jessica Guynn",
+      "Bob Bobbert"
+    ],
+    "publisher": "USA TODAY",
+    "publish_date": null,
+    "publish_date_time": "2020-10-05T19:50:33Z",
+    "body": "[[removed for brevity]]",
+  "citation_urls": [
+            "https://www.nytimes.com/2020/11/30/podcasts/the-daily/covid-vaccine.html",
+			"https://www.nytimes.com/2020/12/01/podcasts/the-daily/joe-biden-janet-yellen.html",
+			"https://www.nytimes.com/2020/12/02/podcasts/the-daily/joe-biden-antony-blinken-foreign-policy.html",
+			"https://www.nytimes.com/2020/12/03/podcasts/the-daily/boy-scouts-sexual-abuse.html",
+			"https://www.nytimes.com/2020/12/04/podcasts/the-daily/donald-trump-pardons.html?action=click&module=Briefings&pgtype=Homepage",
+			"https://www.nytimes.com/2020/11/25/podcasts/the-daily/new-york-city-food-pantries.html",
+			"https://www.nytimes.com/2020/11/30/podcasts/the-daily/covid-vaccine.html",
+			"https://www.nytimes.com/2020/03/27/podcasts/the-daily/kids-coronavirus.html",
+			"https://www.nytimes.com/interactive/2020/science/coronavirus-vaccine-tracker.html",
+			"https://www.nytimes.com/newsletters/the-daily?te=1&nl=the-daily&emc=edit_dy_20190627"
+    ],
+    "html": null
+  }
+}
+
+authors: [Jessica Guynn, Bob Bobbert]
+url: https://www.usatoday.com/story/money/2020/10/05/trump-defeats-covid-commemorative-coins-on-sale-gift-shop/3628383001/
+date: 2020-10-05T19:50:33Z
+content: [[removed for brevity]]
+
+articlecheck: 0.9148068
+Web trust: 0.76375324
+author trust: 0.2247549
+articlecheck: 0.9148068
+final date trust: 1.0
+0.7258287
+-------------------------------------------------------------------------------
+parsing json: 
+{
+  "url": "https://www.sciencedirect.com/science/article/pii/S187770581101993X/pdf?md5=1590f27d9c611eba275dbc0d9e1ee457&pid=1-s2.0-S187770581101993X-main.pdf",
+  "post_data": null,
+  "page_data": {
+    "title": "Measurement and analysis for lithium battery of high-rate discharge performance",
+    "subtitle": null,
+    "authors": [
+      "Huai Chuangfeng",
+      "Liu Pingan",
+	  "Jia Xueyan"    
+	  ],
+    "publisher": "SciVerse ScienceDirect",
+    "publish_date": "2011",
+    "publish_date_time": "2011-10-05T19:50:33Z",
+    "body": "[[removed for brevity]]", 
+	"citation_urls": [
+			"http://creativecommons.org/licenses/by-nc-nd/3.0/",
+            "http://creativecommons.org/licenses/by-nc-nd/3.0/",
+			
+    ],
+    "html": null
+  }
+}
+
+authors: [Huai Chuangfeng, Liu Pingan, Jia Xueyan]
+url: https://www.sciencedirect.com/science/article/pii/S187770581101993X/pdf?md5=1590f27d9c611eba275dbc0d9e1ee457&pid=1-s2.0-S187770581101993X-main.pdf
+date: 2011-10-05T19:50:33Z
+content: [[removed for brevity]]
+
+articlecheck: 0.9148068
+Web trust: 0.76375324
+author trust: 0.2423869
+articlecheck: 0.9148068
+final date trust: 0.4
+0.58023673
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+Total time:  4.729 s
+Finished at: 2020-12-08T13:47:59-08:00
+------------------------------------------------------------------------
