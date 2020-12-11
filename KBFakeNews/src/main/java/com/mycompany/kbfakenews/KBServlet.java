@@ -62,7 +62,7 @@ public class KBServlet {
         JSONObject json = new JSONObject(jsonString);   // make into JSON Object
         kb = new KBTest(json);
         
-        }
+    }
     
     protected void doPost(String filename) throws IOException {
         StringBuilder sb = new StringBuilder();         // string maker to make JSON String

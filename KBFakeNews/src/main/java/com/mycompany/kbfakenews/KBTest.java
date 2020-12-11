@@ -509,15 +509,15 @@ public class KBTest {
         int year = Integer.parseInt(d.split("-")[0] );
     
 		//if statement to check how recent the article is
-		if ((year <= currentYear) && (year > (currentYear-2))){
+                if (d.contains("-04-01")){
+			returnValue = (float) 0;
+                } else if ((year <= currentYear) && (year > (currentYear-2))){
 			returnValue = (float) 1;
 		} else if ((year <= (currentYear-2)) && (year > (currentYear-5))){
 			returnValue = (float) 0.75;
                 } else if ((year <= (currentYear-5)) && (year > (currentYear-10))) {
                         returnValue = (float) 0.4;
 		} else if (year > currentYear){
-			returnValue = (float) 0;
-		} else if (d.contains("-04-01")){
 			returnValue = (float) 0;
 		} else if (d == null || d == ""){
 			returnValue = (float) 0.2;
@@ -538,6 +538,9 @@ public class KBTest {
         System.out.println(s);
     }
     
+    /*
+     * convert JSON array to regular String[] Array
+     */
     private static String[] toStringArray(JSONArray array) {
     if(array==null)
         return null;
